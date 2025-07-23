@@ -386,13 +386,13 @@ p, .body {
     color: var(--color-error);
 }
 
-/* Enhanced Table System */
+/* Enhanced Table System - Excel-like styling */
 .table-container {
     background: var(--color-white);
     border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-card);
-    border: 1px solid var(--color-medium-gray);
+    border: 2px solid var(--color-medium-gray);
     animation: fadeInUp 0.6s ease-out;
     position: relative;
 }
@@ -411,25 +411,49 @@ p, .body {
     width: 100%;
     border-collapse: collapse;
     font-size: var(--font-size-body);
+    border-spacing: 0;
 }
 
 .table th {
-    background: linear-gradient(135deg, var(--color-light-gray) 0%, #f0f0f0 100%);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     padding: var(--space-lg);
     text-align: left;
     font-weight: var(--font-weight-bold);
     color: var(--color-primary);
-    border-bottom: 2px solid var(--color-medium-gray);
+    border: 1px solid var(--color-medium-gray);
+    border-top: none;
     font-size: var(--font-size-caption);
     text-transform: uppercase;
     letter-spacing: 1px;
+    position: sticky;
+    top: 0;
+    z-index: 5;
+}
+
+.table th:first-child {
+    border-left: none;
+}
+
+.table th:last-child {
+    border-right: none;
 }
 
 .table td {
     padding: var(--space-lg);
-    border-bottom: 1px solid rgba(224, 224, 224, 0.5);
+    border: 1px solid var(--color-medium-gray);
+    border-top: none;
     vertical-align: top;
     transition: var(--transition-fast);
+    background: var(--color-white);
+    margin: 0;
+}
+
+.table td:first-child {
+    border-left: none;
+}
+
+.table td:last-child {
+    border-right: none;
 }
 
 .table tbody tr {
@@ -438,12 +462,121 @@ p, .body {
 }
 
 .table tbody tr:hover {
-    background: linear-gradient(135deg, rgba(0, 102, 204, 0.02) 0%, rgba(0, 102, 204, 0.05) 100%);
-    transform: scale(1.01);
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.03) 0%, rgba(0, 102, 204, 0.06) 100%);
+}
+
+.table tbody tr:hover td {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.03) 0%, rgba(0, 102, 204, 0.06) 100%);
+    border-color: rgba(0, 102, 204, 0.2);
 }
 
 .table tbody tr:last-child td {
     border-bottom: none;
+}
+
+/* Excel-like cell focus effects */
+.table td:focus-within {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.08) 0%, rgba(0, 102, 204, 0.12) 100%);
+    border-color: var(--color-accent);
+    box-shadow: inset 0 0 0 2px var(--color-accent);
+    z-index: 10;
+    position: relative;
+}
+
+/* Ensure form elements fill the cell completely */
+.table .form-input,
+.table .form-select,
+.table .form-textarea {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    width: 100%;
+    padding: 8px 12px;
+    margin: -8px -12px;
+    min-height: auto;
+    font-size: var(--font-size-body);
+    font-family: inherit;
+}
+
+.table .form-input:focus,
+.table .form-select:focus,
+.table .form-textarea:focus {
+    outline: none;
+    background: rgba(0, 102, 204, 0.05);
+    box-shadow: none;
+    border: none;
+}
+
+.table .multiselect-display {
+    border: none;
+    border-radius: 0;
+    background: transparent;
+    margin: -12px;
+    padding: 12px 40px 12px 12px;
+    box-shadow: none;
+    min-height: auto;
+    font-size: var(--font-size-body);
+    font-family: inherit;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+.table .multiselect-display:focus,
+.table .multiselect-display.focused {
+    background: rgba(0, 102, 204, 0.05);
+    box-shadow: none;
+    border: none;
+    transform: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+.table .multiselect-display:hover {
+    background: rgba(0, 102, 204, 0.03);
+    box-shadow: none;
+    border: none;
+    transform: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+/* Make the asset type select and multiselect display identical in appearance */
+.table .asset-type-select {
+    font-weight: var(--font-weight-normal);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+    padding-right: 40px;
+}
+
+.table .asset-type-select:focus {
+    box-shadow: none;
+    background: rgba(0, 102, 204, 0.05);
+    border: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
+}
+
+/* Excel-like alternating row colors */
+.table tbody tr:nth-child(even) {
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.table tbody tr:nth-child(even) td {
+    background: rgba(248, 249, 250, 0.5);
+}
+
+.table tbody tr:nth-child(even):hover td {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.05) 0%, rgba(0, 102, 204, 0.08) 100%);
 }
 
 /* Enhanced File Upload Zone */
@@ -513,15 +646,16 @@ p, .body {
     font-size: var(--font-size-caption);
 }
 
-/* Enhanced Multiselect Dropdown */
+/* Enhanced Multiselect Dropdown - Consistent with regular selects */
 .multiselect-dropdown {
     position: relative;
     width: 100%;
+    z-index: 10;
 }
 
 .multiselect-display {
     min-height: 48px;
-    padding: 12px var(--space-md);
+    padding: 14px 40px 14px var(--space-md);
     border: 2px solid var(--color-medium-gray);
     border-radius: var(--radius-sm);
     background-color: var(--color-white);
@@ -532,27 +666,17 @@ p, .body {
     flex-wrap: wrap;
     gap: var(--space-xs);
     position: relative;
+    font-size: var(--font-size-body);
+    font-family: inherit;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 8px center;
+    background-repeat: no-repeat;
+    background-size: 16px;
 }
 
 .multiselect-display::after {
-    content: '▼';
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--color-secondary);
-    transition: var(--transition-fast);
-    font-size: 12px;
-}
-
-.multiselect-display.focused::after {
-    transform: translateY(-50%) rotate(180deg);
-    color: var(--color-accent);
-}
-
-.multiselect-display:hover {
-    border-color: var(--color-accent);
-    transform: translateY(-1px);
+    display: none;
 }
 
 .multiselect-display.focused {
@@ -561,21 +685,26 @@ p, .body {
     transform: translateY(-1px);
 }
 
+.multiselect-display:hover {
+    border-color: var(--color-accent);
+    transform: translateY(-1px);
+}
+
 .multiselect-options {
     position: absolute;
-    top: 100%;
+    top: calc(100% + 2px);
     left: 0;
     right: 0;
     background: var(--color-white);
     border: 2px solid var(--color-accent);
-    border-top: none;
-    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
-    max-height: 250px;
+    border-radius: var(--radius-sm);
+    max-height: 280px;
     overflow-y: auto;
     z-index: 1000;
     display: none;
-    box-shadow: var(--shadow-dropdown);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15), 0 4px 8px rgba(0, 102, 204, 0.1);
     animation: fadeInDown 0.2s ease-out;
+    backdrop-filter: blur(10px);
 }
 
 .multiselect-options.show {
@@ -583,59 +712,93 @@ p, .body {
 }
 
 .multiselect-option {
-    padding: 12px var(--space-md);
+    padding: 14px var(--space-md);
     cursor: pointer;
     transition: var(--transition-fast);
     font-size: var(--font-size-body);
     border-bottom: 1px solid rgba(224, 224, 224, 0.3);
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.multiselect-option:first-child {
+    border-radius: var(--radius-sm) var(--radius-sm) 0 0;
 }
 
 .multiselect-option:last-child {
     border-bottom: none;
+    border-radius: 0 0 var(--radius-sm) var(--radius-sm);
 }
 
 .multiselect-option:hover {
     background: linear-gradient(135deg, var(--color-light-gray) 0%, #f0f0f0 100%);
     transform: translateX(4px);
+    color: var(--color-primary);
 }
 
 .multiselect-option.selected {
-    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 102, 204, 0.05) 100%);
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.12) 0%, rgba(0, 102, 204, 0.08) 100%);
     color: var(--color-accent);
     font-weight: var(--font-weight-medium);
+    border-left: 4px solid var(--color-accent);
+    padding-left: calc(var(--space-md) - 4px);
+}
+
+.multiselect-option.selected::after {
+    content: '✓';
+    color: var(--color-accent);
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.multiselect-option.selected:hover {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.18) 0%, rgba(0, 102, 204, 0.12) 100%);
+    transform: translateX(2px);
 }
 
 .multiselect-option.add-custom {
     border-top: 2px solid var(--color-medium-gray);
     font-weight: var(--font-weight-semibold);
     color: var(--color-accent);
-    background: var(--color-light-gray);
+    background: linear-gradient(135deg, var(--color-light-gray) 0%, #f8f8f8 100%);
+    margin-top: var(--space-xs);
+}
+
+.multiselect-option.add-custom::before {
+    content: '+';
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: var(--space-sm);
 }
 
 .multiselect-option.add-custom:hover {
-    background-color: var(--color-medium-gray);
+    background: linear-gradient(135deg, var(--color-medium-gray) 0%, #e8e8e8 100%);
+    transform: translateX(6px);
 }
 
-/* Enhanced Tag Pills */
+/* Enhanced Tag Pills - More compact to fit with select styling */
 .tag-pill {
     display: inline-flex;
     align-items: center;
-    background: linear-gradient(135deg, var(--color-light-gray) 0%, #f0f0f0 100%);
-    color: var(--color-primary);
-    padding: 6px var(--space-sm);
-    border-radius: 20px;
-    font-size: var(--font-size-small);
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 102, 204, 0.05) 100%);
+    color: var(--color-accent);
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
     font-weight: var(--font-weight-medium);
-    gap: var(--space-xs);
-    border: 1px solid var(--color-medium-gray);
+    gap: 4px;
+    border: 1px solid rgba(0, 102, 204, 0.2);
     transition: var(--transition-fast);
     animation: fadeInScale 0.3s ease-out;
+    box-shadow: 0 1px 2px rgba(0, 102, 204, 0.1);
 }
 
 .tag-pill:hover {
     transform: scale(1.05);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 102, 204, 0.2);
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.15) 0%, rgba(0, 102, 204, 0.08) 100%);
 }
 
 .tag-remove {
@@ -643,13 +806,14 @@ p, .body {
     color: var(--color-secondary);
     font-weight: var(--font-weight-bold);
     font-size: 14px;
-    width: 18px;
-    height: 18px;
+    width: 16px;
+    height: 16px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     transition: var(--transition-fast);
+    margin-left: 2px;
 }
 
 .tag-remove:hover {
@@ -661,6 +825,74 @@ p, .body {
 .multiselect-placeholder {
     color: var(--color-secondary);
     font-style: italic;
+    opacity: 0.8;
+    user-select: none;
+    pointer-events: none;
+    font-size: var(--font-size-body);
+}
+
+.multiselect-placeholder::before {
+    display: none;
+}
+
+/* Remove the custom visual indicators that made it look different */
+.multiselect-dropdown::before {
+    display: none;
+}
+
+.multiselect-display:empty .multiselect-placeholder,
+.multiselect-display .multiselect-placeholder:not(.hidden) {
+    display: flex;
+    align-items: center;
+    color: var(--color-secondary);
+    font-weight: var(--font-weight-normal);
+    cursor: pointer;
+    min-height: 20px;
+    width: 100%;
+    font-style: italic;
+    opacity: 0.7;
+}
+
+.multiselect-display:empty:hover,
+.multiselect-display:has(.multiselect-placeholder:not(.hidden)):hover {
+    border-color: var(--color-accent);
+    background: var(--color-white);
+    cursor: pointer;
+}
+
+.multiselect-display:empty:hover .multiselect-placeholder::before,
+.multiselect-display:hover .multiselect-placeholder:not(.hidden)::before {
+    display: none;
+}
+
+/* Visual indicator for interactive dropdowns */
+.multiselect-dropdown::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.1), rgba(0, 102, 204, 0.05));
+    border-radius: calc(var(--radius-sm) + 2px);
+    opacity: 0;
+    transition: var(--transition-fast);
+    pointer-events: none;
+    z-index: -1;
+}
+
+.multiselect-dropdown:hover::before {
+    opacity: 1;
+}
+
+/* Additional visual feedback for table cells containing dropdowns */
+.table td:has(.multiselect-dropdown):hover {
+    background: linear-gradient(135deg, rgba(0, 102, 204, 0.02) 0%, rgba(0, 102, 204, 0.04) 100%);
+}
+
+/* Ensure dropdown options appear above other elements */
+.multiselect-options.show {
+    z-index: 9999 !important;
 }
 
 /* File Type Indicator */
@@ -980,4 +1212,77 @@ p, .body {
 
 .min-w-0 {
     min-width: 0;
+} 
+
+/* Enhanced form controls for better visibility */
+.description-field {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.description-field:focus {
+    box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1), 0 2px 8px rgba(0, 102, 204, 0.15);
+}
+
+/* Improved dropdown visibility indicators */
+.multiselect-dropdown .multiselect-display:not(.focused):hover::after {
+    color: var(--color-accent);
+    transform: translateY(-50%) scale(1.1);
+}
+
+/* Add subtle pulsing animation for dropdowns with content */
+.multiselect-display:not(:empty) .selected-tags:not(:empty) ~ .multiselect-placeholder.hidden + * {
+    animation: none;
+}
+
+.multiselect-display .selected-tags:not(:empty) {
+    animation: fadeInScale 0.3s ease-out;
+}
+
+/* Enhanced scrollbar for dropdown options */
+.multiselect-options {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 102, 204, 0.3) transparent;
+}
+
+.multiselect-options::-webkit-scrollbar {
+    width: 6px;
+}
+
+.multiselect-options::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.multiselect-options::-webkit-scrollbar-thumb {
+    background: rgba(0, 102, 204, 0.3);
+    border-radius: 3px;
+}
+
+.multiselect-options::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 102, 204, 0.5);
+}
+
+/* Add focus ring for accessibility */
+.table .form-input:focus,
+.table .form-select:focus,
+.table .form-textarea:focus {
+    outline: none;
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+    z-index: 10;
+    position: relative;
+}
+
+/* Improved tag container styling */
+#tagsContainer_* .multiselect-dropdown {
+    z-index: 100;
+}
+
+.table td:has(.multiselect-dropdown) {
+    position: relative;
+    z-index: 1;
+}
+
+.table td:has(.multiselect-options.show) {
+    z-index: 1001;
 } 

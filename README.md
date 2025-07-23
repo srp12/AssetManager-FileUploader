@@ -1,116 +1,168 @@
-# Dynamic File Upload Prototype
+# Dynamic File Upload - Asset Manager
 
-A high-fidelity, interactive HTML prototype for a dynamic file upload system designed for performance coaches and clinicians to upload files for their members.
+A premium, animated file upload system designed for healthcare professionals and performance coaches to upload and manage files for their members. Built with the **Cascaid Health Design System** for a professional, modern user experience.
 
-## Features
+## ✨ Key Features
 
-### Core Functionality
-- **Member Selection**: Choose from a dropdown of mock members (Serena Williams, LeBron James, Megan Rapinoe)
-- **File Upload**: Drag & drop or click to browse for files (supports multiple file selection)
-- **URL Links**: Add files via URL input
-- **Dynamic Forms**: Conditional fields that appear based on file type
-- **Multi-File Type Validation**: Prevents mixing different file types in the same upload batch
-- **Form Validation**: Required field validation with visual feedback
-- **File Type Indicator**: Shows current batch type when files are added
-- **Responsive Design**: Works on desktop and mobile devices
+### 🎨 **Premium Design System**
+- **Cascaid Health Branding**: Professional healthcare aesthetic with premium color palette
+- **Smooth Animations**: 60+ custom animations and micro-interactions
+- **Modern UI Components**: Glass morphism effects, gradient backgrounds, and subtle shadows
+- **Responsive Design**: Optimized for desktop, tablet, and mobile devices
 
-### Supported File Types
-- 📄 **PDF** (.pdf) - Requires document type selection before showing additional fields
-- 🖼️ **Images** (.jpg, .png, .gif) - Standard metadata fields
-- 🎥 **Videos** (.mp4, .mov) - Standard metadata fields  
-- 📊 **Excel** (.xls, .xlsx) - Standard metadata fields
-- 📃 **Word** (.doc, .docx) - Standard metadata fields
-- 🔗 **URLs** - Direct link addition with metadata
+### 🚀 **Enhanced User Experience**
+- **Animated Page Load**: Staggered entrance animations with professional timing
+- **Smart Form Validation**: Real-time feedback with visual error states
+- **Loading States**: Progress indicators during file processing
+- **Success Celebrations**: Confetti animation and success notifications
+- **Ripple Effects**: Material Design-inspired click feedback
 
-### Conditional Logic
+### 📁 **Advanced File Management**
+- **Drag & Drop**: Enhanced with visual feedback and ripple effects
+- **Multi-File Support**: Batch upload with type consistency validation
+- **URL Integration**: Direct link addition with format validation
+- **File Type Detection**: Automatic categorization with contextual fields
+- **Dynamic Table View**: Airtable-style interface for bulk file management
 
-#### PDF Files
-1. First shows "Document Type" dropdown with options:
-   - NeuroCatch Report
-   - Quest Bloodwork
-   - Athlete Summary
-   - BodySpec DEXA
-   - Other
-2. After selection, reveals required fields: Description, Tags, Goals, Date of Capture
-3. Optional field: Notes
+## 🗂️ Supported File Types
 
-#### Video Files  
-1. First shows "Video Type" dropdown with options:
-   - Practice Session
-   - Game Footage
-   - Service Session
-   - Exercise Video
-   - Other
-2. After selection, reveals:
-   - Required fields: Description, Tags, Date of Capture
-   - Contextual multi-select tags based on video type:
-     - **Practice Session**: Warmup, Drills, Scrimmage, Cool Down, Team Practice, Individual Practice
-     - **Game Footage**: Highlights, Full Game, Key Plays, Performance Analysis, Team Strategy, Individual Performance
-     - **Service Session**: Assessment, Treatment, Consultation, Follow-up, Education, Therapy
-     - **Exercise Video**: Strength Training, Cardio, Flexibility, Balance, Rehabilitation, Sport Specific
-     - **Other**: Analysis, Review, Documentation, Reference, Educational, Promotional
-3. Optional fields: Goals, Notes
+### 📄 **PDF Documents**
+- **Document Types**: NeuroCatch Report, Quest Bloodwork, Athlete Summary, BodySpec DEXA, Agreements, Other
+- **Required Fields**: Document Type, Date of Capture
+- **Conditional**: Description (only when "Other" selected)
+- **Dynamic Tags**: Context-aware tag suggestions based on document type
 
-#### Other File Types
-Show immediate required fields:
-- Description (text area)
-- Tags (text input)
-- Date of Capture (date picker)
+### 🖼️ **Images**
+- **Image Types**: Training Image, Assessment Image, Progress Photo, Medical Image, Other
+- **Required Fields**: Image Type, Date of Capture
+- **Smart Tags**: Performance, Training, Assessment, Progress, Development
 
-Optional fields vary by type (Goals, Notes)
+### 🎥 **Videos**
+- **Video Types**: Practice Session, Game Footage, Service Session, Exercise Video, Movement Assessment, Other
+- **Required Fields**: Video Type, Date of Capture
+- **Contextual Tags**: Dynamic options based on video type selection
 
-## How to Use
+### 📊 **Excel Spreadsheets**
+- **Document Types**: Data Analysis, Progress Tracking, Report, Other
+- **Analytics Tags**: Tracking, Metrics, Performance, Progress
 
-1. **Open the File**: Open `index.html` in any modern web browser
-2. **Select Member**: Choose a member from the dropdown (required)
-3. **Add Files**: 
-   - Drag and drop files onto the upload zone, OR
-   - Click the upload zone to browse files, OR
-   - Enter a URL in the URL input field and click "Add URL"
-4. **Fill Metadata**: Complete the required fields that appear for each file
-5. **Validate**: The system will highlight missing required fields
-6. **Submit**: Click "Upload Files" to complete the process
-7. **Success**: See confirmation message and cleared form
+### 📃 **Word Documents**
+- **Document Types**: Report, Plan/Program, Notes, Other
+- **Professional Tags**: Analysis, Summary, Planning, Documentation
 
-## Technical Details
+### 🔗 **URL Links**
+- **Link Types**: Mammo+ Heart Report, Bone Health Report, Educational Resource, External Assessment, Reference Material, Other
+- **Health-Focused**: Specialized options for healthcare resources
 
-- **Stack**: Plain HTML, Tailwind CSS (via CDN), Vanilla JavaScript
-- **File Detection**: Uses file extensions and MIME types
-- **Validation**: Client-side validation with visual feedback
-- **No Backend**: This is a prototype - no actual file uploads occur
-- **Responsive**: Built with Tailwind CSS for mobile/desktop compatibility
+## 🎯 **Field Structure**
 
-## File Structure
+### **Universal Required Fields**
+1. **Asset Type** (contextual label per file type)
+2. **Date of Capture**
+
+### **Conditional Fields**
+- **Description**: Required only when "Other" is selected
+- **Tags**: Multi-select dropdown with contextual options
+- **Notes**: Optional for additional information
+
+### **Smart Tag System**
+Each asset type provides relevant tag suggestions:
+- **NeuroCatch**: Brain Health, Cognitive Assessment, Neurological, Baseline, Follow-up
+- **Quest Bloodwork**: Lab Results, Blood Panel, Biomarkers, Health Screening
+- **Agreements**: Legal, Consent, Authorization, Privacy, Terms, Records Release
+- **Custom Tags**: Users can add their own tags for flexibility
+
+## 🛠️ **Technical Architecture**
+
+### **Design System**
+- **CSS Variables**: Consistent spacing (8px base unit), typography scales, and color palette
+- **Component Library**: Reusable buttons, forms, cards, and animations
+- **Accessibility**: WCAG AA compliant with proper focus management
+
+### **Animation Framework**
+- **Entrance Animations**: `fadeInUp`, `slideInLeft`, `fadeInScale`
+- **Interaction Feedback**: Ripple effects, hover states, loading spinners
+- **Micro-interactions**: Form focus states, tag removal, button feedback
+- **Success States**: Confetti celebration, floating success indicators
+
+### **File Structure**
 ```
 Asset Manager - File Upload/
-├── index.html          # Main application file
-└── README.md          # This documentation
+├── index.html              # Main application
+├── styles.css              # Cascaid Health Design System
+├── README.md              # Documentation
+├── PRD_Current_Implementation.txt
+└── design.json            # Design system specifications
 ```
 
-## Requirements Met
-✅ Member selection dropdown  
-✅ Drag & drop file upload  
-✅ Alternative file browser  
-✅ URL input functionality  
-✅ Dynamic file cards  
-✅ Conditional field logic  
-✅ PDF document type workflow  
-✅ **Video type conditional workflow**  
-✅ **Contextual multi-select video tags**  
-✅ **Multi-file upload support**  
-✅ **File type mixing validation**  
-✅ Form validation  
-✅ Error highlighting  
-✅ Success messaging  
-✅ File removal capability  
-✅ **File type batch indicator**  
-✅ Responsive design  
-✅ Professional styling  
+## 🚀 **How to Use**
 
-## Browser Compatibility
-- Chrome 90+
-- Firefox 88+
-- Safari 14+
-- Edge 90+
+### **Getting Started**
+1. Open `index.html` in a modern web browser
+2. Select a member from the dropdown (Serena Williams, LeBron James, Megan Rapinoe)
 
-The prototype uses modern JavaScript features but maintains broad browser compatibility. 
+### **Adding Files**
+3. **Drag & Drop**: Files onto the animated upload zone
+4. **Browse Files**: Click the upload zone to open file browser
+5. **Add URLs**: Enter links in the URL input field
+
+### **Managing Metadata**
+6. **Asset Type**: Select appropriate category (auto-updates table header)
+7. **Date of Capture**: Required for all files
+8. **Tags**: Choose from contextual suggestions or add custom tags
+9. **Description**: Required only for "Other" asset types
+10. **Notes**: Optional additional information
+
+### **Completing Upload**
+11. **Validation**: System highlights missing required fields with animations
+12. **Submit**: Click "Upload Files" button (shows loading state)
+13. **Success**: Enjoy confetti animation and success notification
+
+## ✅ **Enhanced Features**
+
+### **Visual Feedback**
+- ✨ **Loading States**: Buttons show progress during processing
+- 🎊 **Success Celebrations**: Confetti animation on completion
+- ⚠️ **Smart Errors**: Slide-in notifications with specific guidance
+- 🏷️ **Tag Management**: Animated pills with hover effects
+
+### **User Experience**
+- 🎯 **Smart Validation**: Real-time field checking with visual feedback
+- 📱 **Responsive Design**: Optimized for all screen sizes
+- ⌨️ **Keyboard Support**: Full keyboard navigation and shortcuts
+- 🎨 **Smooth Transitions**: 300ms standard, 150ms fast, 500ms slow timing
+
+### **Performance**
+- 🚀 **Optimized Animations**: Hardware-accelerated CSS transforms
+- 📦 **Efficient Loading**: Staggered content appearance
+- 🎭 **Reduced Motion**: Respects user accessibility preferences
+
+## 🌟 **Design Highlights**
+
+- **Hero Gradient**: Subtle background with fixed attachment
+- **Card Hover Effects**: Lift animation with enhanced shadows
+- **Button Interactions**: Gradient backgrounds with ripple feedback
+- **Form Focus States**: Subtle lift and blue accent glow
+- **Table Animations**: Row hover effects and smooth transitions
+- **Tag System**: Contextual multiselect with custom additions
+
+## 💻 **Browser Support**
+
+- **Chrome**: 90+ ✅
+- **Firefox**: 88+ ✅
+- **Safari**: 14+ ✅
+- **Edge**: 90+ ✅
+
+Optimized for modern browsers with graceful degradation for older versions.
+
+## 🏥 **Healthcare-Focused**
+
+Built specifically for healthcare and performance coaching environments:
+- **Professional Aesthetic**: Cascaid Health design language
+- **Contextual Workflows**: Healthcare-specific document types
+- **Compliance Ready**: Structured metadata for record-keeping
+- **User-Friendly**: Intuitive interface for busy professionals
+
+---
+
+*Built with modern web technologies and a focus on user experience. No backend required - perfect for prototyping and demonstration purposes.* 
