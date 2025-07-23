@@ -4,90 +4,96 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dynamic File Upload - Asset Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        .drop-zone.drag-over {
-            @apply border-blue-500 bg-blue-50;
-        }
-        .file-card {
-            transition: all 0.3s ease;
-        }
-        .field-error {
-            @apply border-red-500;
-        }
-        .success-message {
-            animation: slideIn 0.5s ease-in-out;
-        }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-gray-50 min-h-screen">
-    <div class="container mx-auto px-4 py-8 max-w-4xl">
+<body>
+    <div class="container section">
         <!-- Header -->
-        <div class="mb-8">
-            <h1 class="text-3xl font-bold text-gray-900 mb-2">Asset Manager - File Upload</h1>
-            <p class="text-gray-600">Upload files and documents for your members with automatic metadata fields</p>
-        </div>
+        <header class="mb-xl">
+            <h1 class="h1">Asset Manager - File Upload</h1>
+            <p class="body-large">Upload files and documents for your members with automatic metadata fields</p>
+        </header>
 
         <!-- Success Message -->
-        <div id="successMessage" class="hidden success-message mb-6 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative">
+        <div id="successMessage" class="success-message mb-lg hidden">
             <strong>Success!</strong> Files have been uploaded successfully.
         </div>
 
         <!-- Member Selection -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <label for="memberSelect" class="block text-sm font-medium text-gray-700 mb-2">
-                Select Member <span class="text-red-500">*</span>
+        <div class="card mb-lg">
+            <div class="form-group">
+                <label for="memberSelect" class="form-label">
+                    Select Member <span class="required">*</span>
             </label>
-            <select id="memberSelect" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
+                <select id="memberSelect" class="form-select">
                 <option value="">Choose a member...</option>
                 <option value="serena">Serena Williams</option>
                 <option value="lebron">LeBron James</option>
                 <option value="megan">Megan Rapinoe</option>
             </select>
+            </div>
         </div>
 
         <!-- File Upload Zone -->
-        <div class="bg-white rounded-lg shadow-md p-6 mb-6">
-            <div class="flex items-center justify-between mb-4">
-                <h2 class="text-xl font-semibold text-gray-900">Upload Files</h2>
-                <div id="fileTypeIndicator" class="hidden px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+        <div class="card mb-lg">
+            <div class="card-header">
+                <div class="flex justify-between items-center">
+                    <h2 class="card-title mb-0">Upload Files</h2>
+                    <div id="fileTypeIndicator" class="file-type-indicator hidden">
                     Current batch: <span id="currentFileType"></span>
+                    </div>
                 </div>
             </div>
             
             <!-- Drag & Drop Zone -->
-            <div id="dropZone" class="drop-zone border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400 transition-colors">
-                <div class="space-y-2">
-                    <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
+            <div id="dropZone" class="upload-zone mb-lg">
+                <div class="upload-icon">
+                    <svg stroke="currentColor" fill="none" viewBox="0 0 48 48" width="48" height="48">
                         <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
-                    <p class="text-lg text-gray-600">Drag & Drop files here or click to browse</p>
-                    <p class="text-sm text-gray-400">Supports PDF, Images, Videos, Excel, Word documents</p>
                 </div>
+                <p class="upload-text">Drag & Drop files here or click to browse</p>
+                <p class="upload-subtext">Supports PDF, Images, Videos, Excel, Word documents</p>
                 <input type="file" id="fileInput" multiple class="hidden" accept=".pdf,.jpg,.jpeg,.png,.mp4,.mov,.xls,.xlsx,.doc,.docx">
             </div>
 
             <!-- URL Input -->
-            <div class="mt-6 flex gap-3">
-                <input type="url" id="urlInput" placeholder="Enter URL to add link..." class="flex-1 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                <button id="addUrlBtn" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors">
+            <div class="flex gap-md">
+                <input type="url" id="urlInput" placeholder="Enter URL to add link..." class="form-input" style="flex: 1;">
+                <button id="addUrlBtn" class="btn btn-accent">
                     Add URL
                 </button>
             </div>
         </div>
 
-        <!-- File Cards Container -->
-        <div id="fileCardsContainer" class="space-y-4 mb-6">
-            <!-- Dynamic file cards will be inserted here -->
+        <!-- Files Table -->
+        <div id="filesTableContainer" class="table-container mb-lg hidden">
+            <div class="card-header">
+                <h2 class="card-title mb-0">Uploaded Files</h2>
+            </div>
+            <div style="overflow-x: auto;">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th style="min-width: 200px;">File</th>
+                            <th id="assetTypeHeader" style="min-width: 180px;">Asset Type <span class="required">*</span></th>
+                            <th style="min-width: 160px;">Date of Capture <span class="required">*</span></th>
+                            <th style="min-width: 200px;">Tags</th>
+                            <th style="min-width: 200px;">Description</th>
+                            <th style="min-width: 200px;">Notes</th>
+                            <th style="width: 60px;">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="filesTableBody">
+                        <!-- Dynamic rows will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <!-- Submit Button -->
         <div class="text-center">
-            <button id="submitBtn" class="px-8 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2 transition-colors font-semibold disabled:bg-gray-400 disabled:cursor-not-allowed">
+            <button id="submitBtn" class="btn btn-success">
                 Upload Files
             </button>
         </div>
@@ -103,74 +109,120 @@
         const fileInput = document.getElementById('fileInput');
         const urlInput = document.getElementById('urlInput');
         const addUrlBtn = document.getElementById('addUrlBtn');
-        const fileCardsContainer = document.getElementById('fileCardsContainer');
+        const filesTableContainer = document.getElementById('filesTableContainer');
+        const filesTableBody = document.getElementById('filesTableBody');
         const submitBtn = document.getElementById('submitBtn');
         const memberSelect = document.getElementById('memberSelect');
         const successMessage = document.getElementById('successMessage');
 
-        // File type configuration based on requirements
+        // File type configuration - standardized across all types
         const fileTypeConfig = {
             'pdf': {
                 icon: '📄',
                 name: 'PDF',
-                triggerField: 'documentType',
-                triggerOptions: [
+                assetTypeLabel: 'Document Type',
+                assetTypeOptions: [
                     { value: '', text: 'Select document type...' },
                     { value: 'neurocatch', text: 'NeuroCatch Report' },
                     { value: 'quest', text: 'Quest Bloodwork' },
                     { value: 'athlete', text: 'Athlete Summary' },
                     { value: 'bodyspec', text: 'BodySpec DEXA' },
+                    { value: 'agreements', text: 'Agreements' },
                     { value: 'other', text: 'Other' }
-                ],
-                requiredFields: ['description', 'tags', 'goals', 'dateOfCapture'],
-                optionalFields: ['notes']
+                ]
             },
             'image': {
                 icon: '🖼️',
                 name: 'Image',
-                requiredFields: ['description', 'tags', 'dateOfCapture'],
-                optionalFields: ['goals', 'notes']
+                assetTypeLabel: 'Image Type',
+                assetTypeOptions: [
+                    { value: '', text: 'Select image type...' },
+                    { value: 'training', text: 'Training Image' },
+                    { value: 'assessment', text: 'Assessment Image' },
+                    { value: 'progress', text: 'Progress Photo' },
+                    { value: 'medical', text: 'Medical Image' },
+                    { value: 'other', text: 'Other' }
+                ]
             },
             'video': {
                 icon: '🎥',
                 name: 'Video',
-                triggerField: 'videoType',
-                triggerOptions: [
+                assetTypeLabel: 'Video Type',
+                assetTypeOptions: [
                     { value: '', text: 'Select video type...' },
                     { value: 'practice', text: 'Practice Session' },
                     { value: 'game', text: 'Game Footage' },
                     { value: 'service', text: 'Service Session' },
                     { value: 'exercise', text: 'Exercise Video' },
+                    { value: 'assessment', text: 'Movement Assessment' },
                     { value: 'other', text: 'Other' }
-                ],
-                requiredFields: ['description', 'tags', 'dateOfCapture'],
-                optionalFields: ['goals', 'notes'],
-                contextualTags: {
-                    'practice': ['Warmup', 'Drills', 'Scrimmage', 'Cool Down', 'Team Practice', 'Individual Practice'],
-                    'game': ['Highlights', 'Full Game', 'Key Plays', 'Performance Analysis', 'Team Strategy', 'Individual Performance'],
-                    'service': ['Assessment', 'Treatment', 'Consultation', 'Follow-up', 'Education', 'Therapy'],
-                    'exercise': ['Strength Training', 'Cardio', 'Flexibility', 'Balance', 'Rehabilitation', 'Sport Specific'],
-                    'other': ['Analysis', 'Review', 'Documentation', 'Reference', 'Educational', 'Promotional']
-                }
+                ]
             },
             'excel': {
                 icon: '📊',
                 name: 'Excel',
-                requiredFields: ['description', 'tags', 'dateOfCapture'],
-                optionalFields: ['notes']
+                assetTypeLabel: 'Document Type',
+                assetTypeOptions: [
+                    { value: '', text: 'Select document type...' },
+                    { value: 'data', text: 'Data Analysis' },
+                    { value: 'tracking', text: 'Progress Tracking' },
+                    { value: 'report', text: 'Report' },
+                    { value: 'other', text: 'Other' }
+                ]
             },
             'word': {
                 icon: '📃',
                 name: 'Word',
-                requiredFields: ['description', 'tags', 'dateOfCapture'],
-                optionalFields: ['notes']
+                assetTypeLabel: 'Document Type',
+                assetTypeOptions: [
+                    { value: '', text: 'Select document type...' },
+                    { value: 'report', text: 'Report' },
+                    { value: 'plan', text: 'Plan/Program' },
+                    { value: 'notes', text: 'Notes' },
+                    { value: 'other', text: 'Other' }
+                ]
             },
             'url': {
                 icon: '🔗',
                 name: 'URL Link',
-                requiredFields: ['url', 'description', 'tags'],
-                optionalFields: ['goals']
+                assetTypeLabel: 'Link Type',
+                assetTypeOptions: [
+                    { value: '', text: 'Select link type...' },
+                    { value: 'mammo_heart', text: 'Mammo+ Heart Report' },
+                    { value: 'bone_health', text: 'Bone Health Report' },
+                    { value: 'educational', text: 'Educational Resource' },
+                    { value: 'external_assessment', text: 'External Assessment' },
+                    { value: 'reference', text: 'Reference Material' },
+                    { value: 'other', text: 'Other' }
+                ]
             }
+        };
+
+        // Tag options based on asset type
+        const tagOptions = {
+            'neurocatch': ['Brain Health', 'Cognitive Assessment', 'Neurological', 'Baseline', 'Follow-up', 'Performance'],
+            'quest': ['Lab Results', 'Blood Panel', 'Biomarkers', 'Health Screening', 'Annual Check', 'Wellness'],
+            'athlete': ['Performance', 'Training', 'Assessment', 'Progress', 'Goals', 'Analytics'],
+            'bodyspec': ['Body Composition', 'Bone Density', 'Muscle Mass', 'Health Metrics', 'Progress', 'Baseline'],
+            'agreements': ['Legal', 'Consent', 'Authorization', 'Privacy', 'Terms', 'Release', 'Member Agreement', 'Records Release'],
+            'practice': ['Warmup', 'Drills', 'Scrimmage', 'Cool Down', 'Team Practice', 'Individual Practice'],
+            'game': ['Highlights', 'Full Game', 'Key Plays', 'Performance Analysis', 'Team Strategy', 'Individual Performance'],
+            'service': ['Assessment', 'Treatment', 'Consultation', 'Follow-up', 'Education', 'Therapy'],
+            'exercise': ['Strength Training', 'Cardio', 'Flexibility', 'Balance', 'Rehabilitation', 'Sport Specific'],
+            'assessment': ['Movement', 'Performance', 'Health', 'Progress', 'Baseline', 'Follow-up'],
+            'training': ['Skills', 'Technique', 'Performance', 'Progress', 'Development'],
+            'medical': ['Diagnostic', 'Treatment', 'Progress', 'Follow-up', 'Assessment'],
+            'data': ['Analytics', 'Tracking', 'Metrics', 'Performance', 'Progress'],
+            'tracking': ['Progress', 'Performance', 'Goals', 'Metrics', 'Timeline'],
+            'report': ['Analysis', 'Summary', 'Assessment', 'Progress', 'Results'],
+            'plan': ['Training', 'Treatment', 'Goals', 'Program', 'Strategy'],
+            'notes': ['Session', 'Progress', 'Observations', 'Follow-up', 'Updates'],
+            'mammo_heart': ['Cardiovascular', 'Heart Health', 'Screening', 'Assessment', 'Report'],
+            'bone_health': ['Bone Density', 'Osteoporosis', 'Health Assessment', 'Screening'],
+            'educational': ['Learning', 'Training', 'Information', 'Reference', 'Guidelines'],
+            'external_assessment': ['Third Party', 'Assessment', 'Analysis', 'Report'],
+            'reference': ['Documentation', 'Guidelines', 'Standards', 'Information'],
+            'other': ['Custom', 'Miscellaneous', 'General', 'Additional']
         };
 
         // Get file type from extension or MIME type
@@ -193,231 +245,235 @@
             return 'unknown';
         }
 
-        // Create field HTML
-        function createFieldHTML(fieldName, isRequired = false, fileId, fileType = null, options = null) {
-            const requiredText = isRequired ? '<span class="text-red-500">*</span>' : '';
-            const fieldId = `${fieldName}_${fileId}`;
-            
-            switch (fieldName) {
-                case 'documentType':
+        // Create multiselect dropdown
+        function createMultiselectDropdown(fieldId, options, selectedValues = []) {
+            const selectedTags = selectedValues.map(value => {
+                const option = options.find(opt => opt === value);
+                return option ? `<span class="tag-pill">${option}<span class="tag-remove" data-value="${option}">×</span></span>` : '';
+            }).join('');
+
+            const optionsHtml = options.map(option => 
+                `<div class="multiselect-option ${selectedValues.includes(option) ? 'selected' : ''}" data-value="${option}">${option}</div>`
+            ).join('');
+
                     return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Document Type ${requiredText}
-                            </label>
-                            <select id="${fieldId}" name="${fieldName}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                ${fileTypeConfig.pdf.triggerOptions.map(opt => 
-                                    `<option value="${opt.value}">${opt.text}</option>`
-                                ).join('')}
-                            </select>
+                <div class="multiselect-dropdown">
+                    <div class="multiselect-display" data-field-id="${fieldId}">
+                        <div class="selected-tags">${selectedTags}</div>
+                        <div class="multiselect-placeholder ${selectedValues.length > 0 ? 'hidden' : ''}">Select tags...</div>
+                        </div>
+                    <div class="multiselect-options">
+                        ${optionsHtml}
+                        <div class="multiselect-option add-custom" data-action="add-custom">+ Add custom tag</div>
+                        </div>
+                    <input type="hidden" id="${fieldId}" name="tags" value="${selectedValues.join(',')}">
                         </div>
                     `;
-                case 'videoType':
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Video Type ${requiredText}
-                            </label>
-                            <select id="${fieldId}" name="${fieldName}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                                ${fileTypeConfig.video.triggerOptions.map(opt => 
-                                    `<option value="${opt.value}">${opt.text}</option>`
-                                ).join('')}
-                            </select>
-                        </div>
-                    `;
-                case 'contextualTags':
-                    const tagOptions = options || [];
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Video Tags ${requiredText}
-                            </label>
-                            <div class="border border-gray-300 rounded-md p-2 max-h-32 overflow-y-auto">
-                                ${tagOptions.map((tag, index) => `
-                                    <label class="flex items-center space-x-2 py-1">
-                                        <input type="checkbox" name="${fieldName}" value="${tag}" class="rounded border-gray-300 text-blue-600 focus:ring-blue-500">
-                                        <span class="text-sm text-gray-700">${tag}</span>
-                                    </label>
-                                `).join('')}
-                            </div>
-                            <input type="hidden" id="${fieldId}" name="${fieldName}">
-                        </div>
-                    `;
-                case 'description':
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Description ${requiredText}
-                            </label>
-                            <textarea id="${fieldId}" name="${fieldName}" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter description..."></textarea>
-                        </div>
-                    `;
-                case 'notes':
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Notes ${requiredText}
-                            </label>
-                            <textarea id="${fieldId}" name="${fieldName}" rows="3" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter notes..."></textarea>
-                        </div>
-                    `;
-                case 'tags':
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Tags ${requiredText}
-                            </label>
-                            <input type="text" id="${fieldId}" name="${fieldName}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter tags separated by commas...">
-                        </div>
-                    `;
-                case 'goals':
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Goals ${requiredText}
-                            </label>
-                            <input type="text" id="${fieldId}" name="${fieldName}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Enter goals...">
-                        </div>
-                    `;
-                case 'dateOfCapture':
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                Date of Capture ${requiredText}
-                            </label>
-                            <input type="date" id="${fieldId}" name="${fieldName}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        </div>
-                    `;
-                case 'url':
-                    return `
-                        <div class="mb-4">
-                            <label for="${fieldId}" class="block text-sm font-medium text-gray-700 mb-1">
-                                URL ${requiredText}
-                            </label>
-                            <input type="url" id="${fieldId}" name="${fieldName}" class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="https://...">
-                        </div>
-                    `;
-                default:
-                    return '';
-            }
         }
 
-        // Create file card
-        function createFileCard(file, fileType, fileId) {
+        // Create table row for file
+        function createFileRow(file, fileType, fileId) {
             const config = fileTypeConfig[fileType];
             const fileName = file.name || file.url || 'URL Link';
+            const fileSize = file.size ? `(${(file.size / 1024 / 1024).toFixed(2)} MB)` : '';
             
-            let fieldsHTML = '';
-            
-            // For PDF and Video, start with just the trigger field dropdown
-            if (fileType === 'pdf' || fileType === 'video') {
-                const triggerField = config.triggerField;
-                fieldsHTML = createFieldHTML(triggerField, true, fileId, fileType);
-                fieldsHTML += '<div id="additionalFields_' + fileId + '" style="display: none;"></div>';
-            } else {
-                // For other types, show all required fields immediately
-                config.requiredFields.forEach(field => {
-                    fieldsHTML += createFieldHTML(field, true, fileId, fileType);
-                });
-                config.optionalFields.forEach(field => {
-                    fieldsHTML += createFieldHTML(field, false, fileId, fileType);
-                });
-            }
+            // Asset type options
+            const assetTypeOptions = config.assetTypeOptions.map(opt => 
+                `<option value="${opt.value}">${opt.text}</option>`
+            ).join('');
 
             return `
-                <div class="file-card bg-white rounded-lg shadow-md p-6 border border-gray-200" data-file-id="${fileId}">
-                    <div class="flex items-center justify-between mb-4">
-                        <div class="flex items-center space-x-3">
-                            <span class="text-2xl">${config.icon}</span>
-                            <div>
-                                <h3 class="text-lg font-medium text-gray-900">${fileName}</h3>
-                                <p class="text-sm text-gray-500">${config.name}</p>
+                <tr data-file-id="${fileId}">
+                    <td>
+                        <div class="file-info">
+                            <span class="file-icon">${config.icon}</span>
+                            <div class="file-details">
+                                <div class="file-name">${fileName}</div>
+                                <div class="file-meta">${config.name} ${fileSize}</div>
                             </div>
                         </div>
-                        <button class="remove-file-btn text-gray-400 hover:text-red-500 transition-colors" data-file-id="${fileId}">
-                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                    </td>
+                    <td>
+                        <select id="assetType_${fileId}" name="assetType" class="form-select asset-type-select" data-file-id="${fileId}">
+                            ${assetTypeOptions}
+                        </select>
+                    </td>
+                    <td>
+                        <input type="date" id="dateOfCapture_${fileId}" name="dateOfCapture" class="form-input">
+                    </td>
+                    <td>
+                        <div id="tagsContainer_${fileId}">
+                            ${createMultiselectDropdown(`tags_${fileId}`, tagOptions['other'] || [])}
+                        </div>
+                    </td>
+                    <td>
+                        <textarea id="description_${fileId}" name="description" placeholder="Enter description..." class="form-textarea description-field" data-file-id="${fileId}"></textarea>
+                    </td>
+                    <td>
+                        <textarea id="notes_${fileId}" name="notes" placeholder="Enter notes..." class="form-textarea"></textarea>
+                    </td>
+                    <td class="text-center">
+                        <button class="btn-icon btn-danger remove-file-btn" data-file-id="${fileId}" title="Remove file">
+                            <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path>
                             </svg>
                         </button>
-                    </div>
-                    <div class="space-y-4">
-                        ${fieldsHTML}
-                    </div>
-                </div>
+                    </td>
+                </tr>
             `;
         }
 
-        // Handle trigger field selection (PDF document type, Video type)
-        function handleTriggerFieldChange(selectElement, fileId, fileType) {
-            const additionalFieldsContainer = document.getElementById(`additionalFields_${fileId}`);
-            if (selectElement.value && additionalFieldsContainer) {
-                const config = fileTypeConfig[fileType];
-                let fieldsHTML = '';
-                
-                // Add regular required fields (excluding trigger field)
-                config.requiredFields.forEach(field => {
-                    if (field !== config.triggerField) {
-                        fieldsHTML += createFieldHTML(field, true, fileId, fileType);
+        // Update tags dropdown based on asset type
+        function updateTagsDropdown(fileId, assetType) {
+            const tagsContainer = document.getElementById(`tagsContainer_${fileId}`);
+            const availableTags = tagOptions[assetType] || tagOptions['other'];
+            const newDropdown = createMultiselectDropdown(`tags_${fileId}`, availableTags);
+            tagsContainer.innerHTML = newDropdown;
+            setupMultiselectListeners(fileId);
+        }
+
+        // Setup multiselect dropdown listeners
+        function setupMultiselectListeners(fileId) {
+            const display = document.querySelector(`[data-field-id="tags_${fileId}"]`);
+            const options = display.nextElementSibling;
+            const hiddenInput = document.getElementById(`tags_${fileId}`);
+
+            display.addEventListener('click', (e) => {
+                e.stopPropagation();
+                // Close other dropdowns
+                document.querySelectorAll('.multiselect-options.show').forEach(dropdown => {
+                    if (dropdown !== options) {
+                        dropdown.classList.remove('show');
+                        dropdown.previousElementSibling.classList.remove('focused');
                     }
                 });
                 
-                // For videos, add contextual tags if available
-                if (fileType === 'video' && config.contextualTags && config.contextualTags[selectElement.value]) {
-                    const tagOptions = config.contextualTags[selectElement.value];
-                    fieldsHTML += createFieldHTML('contextualTags', true, fileId, fileType, tagOptions);
+                options.classList.toggle('show');
+                display.classList.toggle('focused');
+            });
+
+            options.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (e.target.classList.contains('multiselect-option')) {
+                    if (e.target.dataset.action === 'add-custom') {
+                        const customTag = prompt('Enter custom tag:');
+                        if (customTag && customTag.trim()) {
+                            addCustomTag(fileId, customTag.trim());
+                        }
+                    } else {
+                        toggleTag(fileId, e.target.dataset.value);
+                    }
+                }
+            });
+
+            // Handle tag removal
+            display.addEventListener('click', (e) => {
+                if (e.target.classList.contains('tag-remove')) {
+                    e.stopPropagation();
+                    removeTag(fileId, e.target.dataset.value);
+                }
+            });
                 }
                 
-                // Add optional fields
-                config.optionalFields.forEach(field => {
-                    fieldsHTML += createFieldHTML(field, false, fileId, fileType);
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.multiselect-dropdown')) {
+                document.querySelectorAll('.multiselect-options.show').forEach(dropdown => {
+                    dropdown.classList.remove('show');
+                    dropdown.previousElementSibling.classList.remove('focused');
                 });
-                
-                additionalFieldsContainer.innerHTML = fieldsHTML;
-                additionalFieldsContainer.style.display = 'block';
-                
-                // Add event listeners for contextual tags checkboxes
-                if (fileType === 'video') {
-                    setupContextualTagsListeners(fileId);
+            }
+        });
+
+        function toggleTag(fileId, tagValue) {
+            const hiddenInput = document.getElementById(`tags_${fileId}`);
+            const currentTags = hiddenInput.value ? hiddenInput.value.split(',') : [];
+            const tagIndex = currentTags.indexOf(tagValue);
+
+            if (tagIndex > -1) {
+                currentTags.splice(tagIndex, 1);
+            } else {
+                currentTags.push(tagValue);
+            }
+
+            hiddenInput.value = currentTags.join(',');
+            updateTagsDisplay(fileId, currentTags);
                 }
-            } else if (additionalFieldsContainer) {
-                additionalFieldsContainer.style.display = 'none';
-                additionalFieldsContainer.innerHTML = '';
+
+        function addCustomTag(fileId, tagValue) {
+            const hiddenInput = document.getElementById(`tags_${fileId}`);
+            const currentTags = hiddenInput.value ? hiddenInput.value.split(',') : [];
+            
+            if (!currentTags.includes(tagValue)) {
+                currentTags.push(tagValue);
+                hiddenInput.value = currentTags.join(',');
+                updateTagsDisplay(fileId, currentTags);
             }
         }
 
-        // Setup contextual tags listeners to update hidden field
-        function setupContextualTagsListeners(fileId) {
-            const checkboxes = document.querySelectorAll(`[data-file-id="${fileId}"] input[name="contextualTags"]`);
-            const hiddenField = document.getElementById(`contextualTags_${fileId}`);
+        function removeTag(fileId, tagValue) {
+            const hiddenInput = document.getElementById(`tags_${fileId}`);
+            const currentTags = hiddenInput.value ? hiddenInput.value.split(',') : [];
+            const tagIndex = currentTags.indexOf(tagValue);
+
+            if (tagIndex > -1) {
+                currentTags.splice(tagIndex, 1);
+                hiddenInput.value = currentTags.join(',');
+                updateTagsDisplay(fileId, currentTags);
+            }
+        }
+
+        function updateTagsDisplay(fileId, selectedTags) {
+            const display = document.querySelector(`[data-field-id="tags_${fileId}"]`);
+            const selectedTagsContainer = display.querySelector('.selected-tags');
+            const placeholder = display.querySelector('.multiselect-placeholder');
+
+            const selectedTagsHtml = selectedTags.map(tag => 
+                `<span class="tag-pill">${tag}<span class="tag-remove" data-value="${tag}">×</span></span>`
+            ).join('');
+
+            selectedTagsContainer.innerHTML = selectedTagsHtml;
             
-            checkboxes.forEach(checkbox => {
-                checkbox.addEventListener('change', () => {
-                    const selectedTags = Array.from(checkboxes)
-                        .filter(cb => cb.checked)
-                        .map(cb => cb.value);
-                    if (hiddenField) {
-                        hiddenField.value = selectedTags.join(',');
+            if (selectedTags.length > 0) {
+                placeholder.classList.add('hidden');
+            } else {
+                placeholder.classList.remove('hidden');
+            }
+
+            // Update option states
+            const options = display.nextElementSibling;
+            const optionElements = options.querySelectorAll('.multiselect-option[data-value]');
+            optionElements.forEach(option => {
+                if (selectedTags.includes(option.dataset.value)) {
+                    option.classList.add('selected');
+                } else {
+                    option.classList.remove('selected');
                     }
-                });
             });
         }
 
-        // Update file type indicator
+        // Update file type indicator and table header
         function updateFileTypeIndicator() {
             const indicator = document.getElementById('fileTypeIndicator');
             const currentFileTypeSpan = document.getElementById('currentFileType');
+            const assetTypeHeader = document.getElementById('assetTypeHeader');
             
             if (fileQueue.length > 0) {
                 const currentType = fileQueue[0].type;
                 const config = fileTypeConfig[currentType];
                 currentFileTypeSpan.textContent = config.name;
                 indicator.classList.remove('hidden');
+                
+                // Update table header to show specific asset type label
+                assetTypeHeader.innerHTML = `${config.assetTypeLabel} <span class="required">*</span>`;
             } else {
                 indicator.classList.add('hidden');
+                // Reset to generic label when no files
+                assetTypeHeader.innerHTML = `Asset Type <span class="required">*</span>`;
             }
         }
 
-        // Add file to queue
+        // Add file to queue with enhanced animations
         function addFileToQueue(file, type, isUrl = false) {
             const fileId = ++fileIdCounter;
             const fileObj = {
@@ -430,33 +486,118 @@
             fileQueue.push(fileObj);
             updateFileTypeIndicator();
             
-            const cardHTML = createFileCard(file, type, fileId);
-            fileCardsContainer.insertAdjacentHTML('beforeend', cardHTML);
+            // Show table if hidden with animation
+            if (filesTableContainer.classList.contains('hidden')) {
+                filesTableContainer.classList.remove('hidden');
+                // Trigger reflow for animation
+                setTimeout(() => {
+                    filesTableContainer.style.animation = 'fadeInUp 0.6s ease-out';
+                }, 10);
+            }
             
-            // Add event listeners for the new card
-            const fileCard = document.querySelector(`[data-file-id="${fileId}"]`);
+            const rowHTML = createFileRow(file, type, fileId);
+            filesTableBody.insertAdjacentHTML('beforeend', rowHTML);
             
-            // Remove button
-            const removeBtn = fileCard.querySelector('.remove-file-btn');
+            // Animate the new row
+            const fileRow = document.querySelector(`tr[data-file-id="${fileId}"]`);
+            fileRow.style.animation = 'fadeInUp 0.4s ease-out';
+            
+            // Add event listeners for the new row
+            const removeBtn = fileRow.querySelector('.remove-file-btn');
             removeBtn.addEventListener('click', () => removeFile(fileId));
             
-            // Trigger field change for PDFs and Videos
-            const config = fileTypeConfig[type];
-            if (config.triggerField) {
-                const triggerSelect = fileCard.querySelector(`#${config.triggerField}_${fileId}`);
-                if (triggerSelect) {
-                    triggerSelect.addEventListener('change', (e) => handleTriggerFieldChange(e.target, fileId, type));
+            // Asset type change with animation
+            const assetTypeSelect = fileRow.querySelector('.asset-type-select');
+            assetTypeSelect.addEventListener('change', (e) => {
+                // Add loading state
+                const tagsContainer = document.getElementById(`tagsContainer_${fileId}`);
+                tagsContainer.style.opacity = '0.5';
+                tagsContainer.style.transform = 'scale(0.95)';
+                
+                setTimeout(() => {
+                    updateTagsDropdown(fileId, e.target.value);
+                    updateDescriptionRequirement(fileId, e.target.value);
+                    
+                    // Restore with animation
+                    tagsContainer.style.opacity = '1';
+                    tagsContainer.style.transform = 'scale(1)';
+                    tagsContainer.style.transition = 'all 0.3s ease';
+                }, 200);
+            });
+
+            // Setup multiselect listeners
+            setupMultiselectListeners(fileId);
+            
+            // Add file upload success animation
+            showSuccessAnimation(fileRow);
+        }
+        
+        // Enhanced file upload success animation
+        function showSuccessAnimation(element) {
+            // Create a subtle pulse effect
+            element.style.animation = 'pulse 0.6s ease-in-out';
+            
+            // Create floating success indicator
+            const successIndicator = document.createElement('div');
+            successIndicator.innerHTML = '✓';
+            successIndicator.style.cssText = `
+                position: absolute;
+                right: -20px;
+                top: 50%;
+                transform: translateY(-50%);
+                color: var(--color-success);
+                font-size: 18px;
+                font-weight: bold;
+                opacity: 0;
+                animation: fadeInScale 0.4s ease-out forwards;
+                z-index: 10;
+            `;
+            
+            element.style.position = 'relative';
+            element.appendChild(successIndicator);
+            
+            // Remove after animation
+            setTimeout(() => {
+                if (successIndicator.parentNode) {
+                    successIndicator.remove();
                 }
+            }, 2000);
+        }
+
+        // Enhanced file removal with animation
+        function removeFile(fileId) {
+            const fileRow = document.querySelector(`tr[data-file-id="${fileId}"]`);
+            if (fileRow) {
+                // Add removal animation
+                fileRow.style.animation = 'fadeInUp 0.3s ease-in reverse forwards';
+                fileRow.style.transformOrigin = 'center';
+                
+                setTimeout(() => {
+                    fileQueue = fileQueue.filter(f => f.id !== fileId);
+                    updateFileTypeIndicator();
+                    fileRow.remove();
+                    
+                    // Hide table if no files with animation
+                    if (fileQueue.length === 0) {
+                        filesTableContainer.style.animation = 'fadeInUp 0.3s ease-in reverse';
+                        setTimeout(() => {
+                            filesTableContainer.classList.add('hidden');
+                            filesTableContainer.style.animation = '';
+                        }, 300);
+                    }
+                }, 300);
             }
         }
 
-        // Remove file from queue
-        function removeFile(fileId) {
-            fileQueue = fileQueue.filter(f => f.id !== fileId);
-            updateFileTypeIndicator();
-            const fileCard = document.querySelector(`[data-file-id="${fileId}"]`);
-            if (fileCard) {
-                fileCard.remove();
+        // Update description field requirement based on asset type
+        function updateDescriptionRequirement(fileId, assetType) {
+            const descriptionField = document.getElementById(`description_${fileId}`);
+            if (assetType === 'other') {
+                descriptionField.setAttribute('required', 'true');
+                descriptionField.classList.add('form-error');
+            } else {
+                descriptionField.removeAttribute('required');
+                descriptionField.classList.remove('form-error');
             }
         }
 
@@ -524,167 +665,461 @@
 
             // Check member selection
             if (!memberSelect.value) {
-                memberSelect.classList.add('field-error');
+                memberSelect.classList.add('form-error');
                 errors.push('Please select a member');
                 isValid = false;
             } else {
-                memberSelect.classList.remove('field-error');
+                memberSelect.classList.remove('form-error');
             }
 
-            // Check each file card
+            // Check each file
             fileQueue.forEach(fileObj => {
-                const fileCard = document.querySelector(`[data-file-id="${fileObj.id}"]`);
-                const config = fileTypeConfig[fileObj.type];
-                const fileName = fileObj.file.name || fileObj.file.url || `${config.name} file`;
+                const fileRow = document.querySelector(`tr[data-file-id="${fileObj.id}"]`);
+                const fileName = fileObj.file.name || fileObj.file.url || `${fileTypeConfig[fileObj.type].name} file`;
                 
-                // For files with trigger fields (PDF, Video), check trigger field first
-                if (config.triggerField) {
-                    const triggerSelect = fileCard.querySelector(`#${config.triggerField}_${fileObj.id}`);
-                    if (!triggerSelect || !triggerSelect.value) {
-                        if (triggerSelect) triggerSelect.classList.add('field-error');
-                        errors.push(`${config.triggerField === 'documentType' ? 'Document type' : 'Video type'} is required for ${fileName}`);
+                // Check asset type
+                const assetTypeField = fileRow.querySelector('select[name="assetType"]');
+                if (!assetTypeField || !assetTypeField.value) {
+                    if (assetTypeField) assetTypeField.classList.add('form-error');
+                    errors.push(`${fileTypeConfig[fileObj.type].assetTypeLabel} is required for ${fileName}`);
+                    isValid = false;
+                } else {
+                    if (assetTypeField) assetTypeField.classList.remove('form-error');
+                }
+                
+                // Check date of capture
+                const dateField = fileRow.querySelector('input[name="dateOfCapture"]');
+                if (!dateField || !dateField.value) {
+                    if (dateField) dateField.classList.add('form-error');
+                    errors.push(`Date of capture is required for ${fileName}`);
+                    isValid = false;
+                } else {
+                    if (dateField) dateField.classList.remove('form-error');
+                }
+                
+                // Check description only if asset type is 'other'
+                if (assetTypeField && assetTypeField.value === 'other') {
+                    const descriptionField = fileRow.querySelector('textarea[name="description"]');
+                    if (!descriptionField || !descriptionField.value.trim()) {
+                        if (descriptionField) descriptionField.classList.add('form-error');
+                        errors.push(`Description is required when ${fileTypeConfig[fileObj.type].assetTypeLabel.toLowerCase()} is 'Other' for ${fileName}`);
                         isValid = false;
                     } else {
-                        if (triggerSelect) triggerSelect.classList.remove('field-error');
-                        
-                        // Check other required fields only if trigger field is selected
-                        config.requiredFields.forEach(fieldName => {
-                            if (fieldName !== config.triggerField) {
-                                const field = fileCard.querySelector(`#${fieldName}_${fileObj.id}`);
-                                if (field && !field.value.trim()) {
-                                    field.classList.add('field-error');
-                                    errors.push(`${fieldName} is required for ${fileName}`);
-                                    isValid = false;
-                                } else if (field) {
-                                    field.classList.remove('field-error');
-                                }
-                            }
-                        });
-
-                        // For videos, check contextual tags
-                        if (fileObj.type === 'video') {
-                            const contextualTagsField = fileCard.querySelector(`#contextualTags_${fileObj.id}`);
-                            if (contextualTagsField && !contextualTagsField.value.trim()) {
-                                const checkboxContainer = fileCard.querySelector(`input[name="contextualTags"]`)?.closest('.border');
-                                if (checkboxContainer) checkboxContainer.classList.add('field-error');
-                                errors.push(`Video tags are required for ${fileName}`);
-                                isValid = false;
-                            } else if (contextualTagsField) {
-                                const checkboxContainer = fileCard.querySelector(`input[name="contextualTags"]`)?.closest('.border');
-                                if (checkboxContainer) checkboxContainer.classList.remove('field-error');
-                            }
-                        }
+                        if (descriptionField) descriptionField.classList.remove('form-error');
                     }
-                } else {
-                    // For other file types, check all required fields
-                    config.requiredFields.forEach(fieldName => {
-                        const field = fileCard.querySelector(`#${fieldName}_${fileObj.id}`);
-                        if (field && !field.value.trim()) {
-                            field.classList.add('field-error');
-                            errors.push(`${fieldName} is required for ${fileName}`);
-                            isValid = false;
-                        } else if (field) {
-                            field.classList.remove('field-error');
-                        }
-                    });
                 }
             });
 
             return { isValid, errors };
         }
 
-        // Handle form submission
+        // Enhanced form submission with loading state
         function handleSubmit() {
             const validation = validateForm();
             
             if (!validation.isValid) {
-                alert('Please fix the following errors:\n\n' + validation.errors.join('\n'));
+                // Enhanced error display
+                showErrorMessage('Please fix the following errors:\n\n' + validation.errors.join('\n'));
                 return;
             }
 
             if (fileQueue.length === 0) {
-                alert('Please add at least one file or URL to upload.');
+                showErrorMessage('Please add at least one file or URL to upload.');
                 return;
             }
 
-            // Show success message
+            // Add loading state to submit button
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = `
+                <svg class="loading" width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                </svg>
+                Uploading...
+            `;
+            submitBtn.disabled = true;
+            submitBtn.style.transform = 'scale(0.95)';
+
+            // Simulate upload process
+            setTimeout(() => {
+                // Show enhanced success message
+                showSuccessMessage();
+                
+                // Clear the form with animation
+                clearFormWithAnimation();
+                
+                // Restore button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                submitBtn.style.transform = 'scale(1)';
+                
+                // Scroll to top with smooth animation
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 2000);
+        }
+        
+        // Enhanced success message
+        function showSuccessMessage() {
             successMessage.classList.remove('hidden');
+            successMessage.style.animation = 'slideInSuccess 0.6s ease-out';
             
-            // Clear the form
+            // Add confetti effect (simple version)
+            createConfettiEffect();
+            
+            // Auto-hide with fade out
+            setTimeout(() => {
+                successMessage.style.animation = 'slideInSuccess 0.4s ease-in reverse';
+                setTimeout(() => {
+                    successMessage.classList.add('hidden');
+                    successMessage.style.animation = '';
+                }, 400);
+            }, 4000);
+        }
+        
+        // Simple confetti effect
+        function createConfettiEffect() {
+            const colors = ['#0066cc', '#28a745', '#ffc107', '#dc3545'];
+            const confettiContainer = document.createElement('div');
+            confettiContainer.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                pointer-events: none;
+                z-index: 9999;
+            `;
+            document.body.appendChild(confettiContainer);
+            
+            for (let i = 0; i < 50; i++) {
+                const confetti = document.createElement('div');
+                confetti.style.cssText = `
+                    position: absolute;
+                    width: 6px;
+                    height: 6px;
+                    background: ${colors[Math.floor(Math.random() * colors.length)]};
+                    left: ${Math.random() * 100}%;
+                    top: -10px;
+                    border-radius: 50%;
+                    animation: confettiFall ${2 + Math.random() * 3}s linear forwards;
+                `;
+                confettiContainer.appendChild(confetti);
+            }
+            
+            // Add confetti animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes confettiFall {
+                    0% {
+                        transform: translateY(-10px) rotate(0deg);
+                        opacity: 1;
+                    }
+                    100% {
+                        transform: translateY(100vh) rotate(720deg);
+                        opacity: 0;
+                    }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // Clean up
+            setTimeout(() => {
+                confettiContainer.remove();
+                style.remove();
+            }, 5000);
+        }
+        
+        // Enhanced error message display
+        function showErrorMessage(message) {
+            // Create custom error modal or enhanced alert
+            const errorDiv = document.createElement('div');
+            errorDiv.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: linear-gradient(135deg, rgba(220, 53, 69, 0.95) 0%, rgba(200, 35, 51, 0.95) 100%);
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 4px 20px rgba(220, 53, 69, 0.3);
+                z-index: 10000;
+                max-width: 400px;
+                animation: slideInRight 0.4s ease-out;
+                backdrop-filter: blur(10px);
+            `;
+            errorDiv.innerHTML = `
+                <div style="display: flex; align-items: flex-start; gap: 12px;">
+                    <span style="font-size: 18px;">⚠️</span>
+                    <div>
+                        <strong>Validation Error</strong>
+                        <p style="margin-top: 4px; font-size: 14px; line-height: 1.4;">${message.replace(/\n/g, '<br>')}</p>
+                    </div>
+                </div>
+            `;
+            
+            // Add slide in animation
+            const slideInStyle = document.createElement('style');
+            slideInStyle.textContent = `
+                @keyframes slideInRight {
+                    from {
+                        opacity: 0;
+                        transform: translateX(100%);
+                    }
+                    to {
+                        opacity: 1;
+                        transform: translateX(0);
+                    }
+                }
+            `;
+            document.head.appendChild(slideInStyle);
+            
+            document.body.appendChild(errorDiv);
+            
+            // Auto remove with animation
+            setTimeout(() => {
+                errorDiv.style.animation = 'slideInRight 0.4s ease-in reverse';
+                setTimeout(() => {
+                    errorDiv.remove();
+                    slideInStyle.remove();
+                }, 400);
+            }, 5000);
+        }
+        
+        // Clear form with animation
+        function clearFormWithAnimation() {
+            // Animate table disappearance
+            if (!filesTableContainer.classList.contains('hidden')) {
+                filesTableContainer.style.animation = 'fadeInUp 0.4s ease-in reverse';
+                setTimeout(() => {
+                    filesTableContainer.classList.add('hidden');
+                    filesTableContainer.style.animation = '';
+                }, 400);
+            }
+            
+            // Clear data
             fileQueue = [];
             updateFileTypeIndicator();
-            fileCardsContainer.innerHTML = '';
+            filesTableBody.innerHTML = '';
+            
+            // Animate form reset
+            memberSelect.style.animation = 'pulse 0.4s ease-out';
+            urlInput.style.animation = 'pulse 0.4s ease-out';
+            
             memberSelect.value = '';
             urlInput.value = '';
-            
-            // Hide success message after 5 seconds
-            setTimeout(() => {
-                successMessage.classList.add('hidden');
-            }, 5000);
+        }
 
-            // Scroll to top
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+        // Enhanced drag and drop with visual feedback
+        function setupEnhancedDragDrop() {
+            let dragCounter = 0;
+            
+            // Enhanced drag over
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('drag-over');
+                
+                // Add ripple effect
+                createRippleEffect(e, dropZone);
+            });
+            
+            dropZone.addEventListener('dragenter', (e) => {
+                e.preventDefault();
+                dragCounter++;
+                dropZone.classList.add('drag-over');
+            });
+            
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dragCounter--;
+                if (dragCounter === 0) {
+                    dropZone.classList.remove('drag-over');
+                }
+            });
+            
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dragCounter = 0;
+                dropZone.classList.remove('drag-over');
+                
+                // Add drop animation
+                dropZone.style.animation = 'pulse 0.4s ease-out';
+                setTimeout(() => {
+                    dropZone.style.animation = '';
+                }, 400);
+                
+                handleFiles(e.dataTransfer.files);
+            });
+        }
+        
+        // Create ripple effect for interactions
+        function createRippleEffect(event, element) {
+            const ripple = document.createElement('div');
+            const rect = element.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = event.clientX - rect.left - size / 2;
+            const y = event.clientY - rect.top - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                left: ${x}px;
+                top: ${y}px;
+                background: radial-gradient(circle, rgba(0, 102, 204, 0.3) 0%, transparent 70%);
+                border-radius: 50%;
+                transform: scale(0);
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+                z-index: 1;
+            `;
+            
+            // Add ripple animation
+            if (!document.getElementById('ripple-style')) {
+                const rippleStyle = document.createElement('style');
+                rippleStyle.id = 'ripple-style';
+                rippleStyle.textContent = `
+                    @keyframes ripple {
+                        to {
+                            transform: scale(1);
+                            opacity: 0;
+                        }
+                    }
+                `;
+                document.head.appendChild(rippleStyle);
+            }
+            
+            element.style.position = 'relative';
+            element.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        }
+
+        // Enhanced initialization
+        function initializeApp() {
+            console.log('🚀 Dynamic File Upload System initialized with enhanced animations');
+            
+            // Setup enhanced drag and drop
+            setupEnhancedDragDrop();
+            
+            // Add click ripple effects to buttons
+            document.addEventListener('click', (e) => {
+                if (e.target.matches('.btn, .btn-icon')) {
+                    createRippleEffect(e, e.target);
+                }
+            });
+            
+            // Add entrance animations to initial elements
+            const cards = document.querySelectorAll('.card');
+            cards.forEach((card, index) => {
+                card.style.animation = `fadeInUp 0.6s ease-out ${index * 0.1}s both`;
+            });
         }
 
         // Event Listeners
         
-        // Drop zone events
+        // File input and click handlers
         dropZone.addEventListener('click', () => fileInput.click());
-        dropZone.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            dropZone.classList.add('drag-over');
-        });
-        dropZone.addEventListener('dragleave', () => {
-            dropZone.classList.remove('drag-over');
-        });
-        dropZone.addEventListener('drop', (e) => {
-            e.preventDefault();
-            dropZone.classList.remove('drag-over');
-            handleFiles(e.dataTransfer.files);
-        });
-
-        // File input change
+        
+        // File input change with animation
         fileInput.addEventListener('change', (e) => {
-            handleFiles(e.target.files);
+            if (e.target.files.length > 0) {
+                // Add selection animation
+                dropZone.style.animation = 'pulse 0.4s ease-out';
+                setTimeout(() => {
+                    dropZone.style.animation = '';
+                }, 400);
+                
+                handleFiles(e.target.files);
+            }
         });
 
-        // URL input
+        // Enhanced URL input with validation feedback
         addUrlBtn.addEventListener('click', () => {
             const url = urlInput.value.trim();
             if (url) {
+                // Validate URL format
+                try {
+                    new URL(url);
+                } catch {
+                    showErrorMessage('Please enter a valid URL (e.g., https://example.com)');
+                    urlInput.style.animation = 'shake 0.5s ease-in-out';
+                    setTimeout(() => {
+                        urlInput.style.animation = '';
+                    }, 500);
+                    return;
+                }
+                
                 // Check for mixed file types before adding URL
                 if (fileQueue.length > 0) {
                     const existingTypes = [...new Set(fileQueue.map(f => f.type))];
                     if (existingTypes.length > 0 && existingTypes[0] !== 'url') {
-                        alert(`Error: Cannot mix file types. You currently have ${fileTypeConfig[existingTypes[0]].name} files. Please upload them first or remove them before adding URLs.`);
+                        showErrorMessage(`Error: Cannot mix file types. You currently have ${fileTypeConfig[existingTypes[0]].name} files. Please upload them first or remove them before adding URLs.`);
                         return;
                     }
                 }
                 
-                const urlObj = { url: url, name: url };
-                addFileToQueue(urlObj, 'url', true);
-                urlInput.value = '';
+                // Add loading state to URL input
+                addUrlBtn.innerHTML = '⏳ Adding...';
+                addUrlBtn.disabled = true;
+                urlInput.disabled = true;
+                
+                setTimeout(() => {
+                    const urlObj = { url: url, name: url };
+                    addFileToQueue(urlObj, 'url', true);
+                    urlInput.value = '';
+                    
+                    // Restore button state
+                    addUrlBtn.innerHTML = 'Add URL';
+                    addUrlBtn.disabled = false;
+                    urlInput.disabled = false;
+                }, 500);
+            } else {
+                // Show validation feedback
+                urlInput.style.animation = 'shake 0.5s ease-in-out';
+                urlInput.focus();
+                setTimeout(() => {
+                    urlInput.style.animation = '';
+                }, 500);
             }
         });
 
         urlInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
+                e.preventDefault();
                 addUrlBtn.click();
             }
         });
 
-        // Submit button
+        // Enhanced submit button
         submitBtn.addEventListener('click', handleSubmit);
 
-        // Clear field errors on input
+        // Enhanced field error clearing with micro-animations
         document.addEventListener('input', (e) => {
             if (e.target.matches('input, select, textarea')) {
-                e.target.classList.remove('field-error');
+                if (e.target.classList.contains('form-error')) {
+                    e.target.classList.remove('form-error');
+                    e.target.style.animation = 'fadeInScale 0.3s ease-out';
+                    setTimeout(() => {
+                        e.target.style.animation = '';
+                    }, 300);
+                }
+            }
+        });
+
+        // Add focus animations to form elements
+        document.addEventListener('focusin', (e) => {
+            if (e.target.matches('.form-input, .form-select, .form-textarea')) {
+                e.target.style.transform = 'translateY(-1px)';
+            }
+        });
+
+        document.addEventListener('focusout', (e) => {
+            if (e.target.matches('.form-input, .form-select, .form-textarea')) {
+                e.target.style.transform = 'translateY(0)';
             }
         });
 
         // Initialize
-        console.log('Dynamic File Upload System initialized');
+        initializeApp();
     </script>
 </body>
 </html> 

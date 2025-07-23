@@ -1,0 +1,341 @@
+{
+    "designSystem": {
+      "name": "Cascaid Health Design System",
+      "version": "1.0.0",
+      "description": "Design system profile extracted from cascaidhealth.com featuring modern healthcare/wellness aesthetic with premium feel and clean typography",
+      "source": "https://cascaidhealth.com",
+      "platform": "Wix",
+      "lastAnalyzed": "2025-01-22"
+    },
+    "brandIdentity": {
+      "mission": "Peak Performance & Prevention",
+      "tagline": "The Cascaid Effect - small decisions, extraordinary results",
+      "positioning": "Premium health optimization platform combining athletic performance with longevity",
+      "values": ["Performance", "Prevention", "Precision", "Personalization"],
+      "tone": "Professional, empowering, scientific, premium, human-centered"
+    },
+    "colorPalette": {
+      "primary": {
+        "main": "#1a1a1a",
+        "description": "Deep charcoal black - used for primary text and strong contrast elements"
+      },
+      "secondary": {
+        "main": "#4a4a4a", 
+        "description": "Medium gray - used for secondary text and subtle elements"
+      },
+      "accent": {
+        "main": "#0066cc",
+        "description": "Professional blue - used sparingly for CTAs and links"
+      },
+      "neutral": {
+        "white": "#ffffff",
+        "lightGray": "#f8f8f8",
+        "mediumGray": "#e0e0e0",
+        "darkGray": "#333333"
+      },
+      "semantic": {
+        "success": "#28a745",
+        "warning": "#ffc107", 
+        "error": "#dc3545",
+        "info": "#17a2b8"
+      },
+      "gradients": [
+        {
+          "name": "heroGradient",
+          "value": "linear-gradient(135deg, #f8f8f8 0%, #ffffff 100%)",
+          "usage": "Background overlays and hero sections"
+        }
+      ]
+    },
+    "typography": {
+      "fontFamilies": {
+        "primary": {
+          "name": "System Default (Wix)",
+          "fallback": "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif",
+          "weights": [300, 400, 500, 600, 700],
+          "usage": "All body text, headings, and UI elements"
+        },
+        "secondary": {
+          "name": "Monospace",
+          "fallback": "'Courier New', Courier, monospace",
+          "usage": "Technical data, codes, specifications"
+        }
+      },
+      "scale": {
+        "hero": {
+          "fontSize": "3.5rem",
+          "lineHeight": "1.1",
+          "fontWeight": 700,
+          "letterSpacing": "-0.02em",
+          "usage": "Main hero headlines"
+        },
+        "h1": {
+          "fontSize": "2.5rem",
+          "lineHeight": "1.2",
+          "fontWeight": 600,
+          "letterSpacing": "-0.01em"
+        },
+        "h2": {
+          "fontSize": "2rem",
+          "lineHeight": "1.3",
+          "fontWeight": 600,
+          "letterSpacing": "0"
+        },
+        "h3": {
+          "fontSize": "1.5rem",
+          "lineHeight": "1.4",
+          "fontWeight": 500,
+          "letterSpacing": "0"
+        },
+        "body": {
+          "fontSize": "1rem",
+          "lineHeight": "1.6",
+          "fontWeight": 400,
+          "letterSpacing": "0"
+        },
+        "bodyLarge": {
+          "fontSize": "1.125rem",
+          "lineHeight": "1.6",
+          "fontWeight": 400,
+          "letterSpacing": "0"
+        },
+        "caption": {
+          "fontSize": "0.875rem",
+          "lineHeight": "1.4",
+          "fontWeight": 400,
+          "letterSpacing": "0.01em"
+        },
+        "small": {
+          "fontSize": "0.75rem",
+          "lineHeight": "1.4",
+          "fontWeight": 400,
+          "letterSpacing": "0.02em"
+        }
+      },
+      "hierarchyPrinciples": [
+        "Bold, confident headlines with tight letter spacing",
+        "Clear size differentiation between hierarchy levels",
+        "Generous line spacing for readability",
+        "Strategic use of font weight for emphasis",
+        "Minimal color variation - primarily black text on white"
+      ]
+    },
+    "spacing": {
+      "system": "8px base unit",
+      "scale": {
+        "xs": "4px",
+        "sm": "8px", 
+        "md": "16px",
+        "lg": "24px",
+        "xl": "32px",
+        "2xl": "48px",
+        "3xl": "64px",
+        "4xl": "96px",
+        "5xl": "128px"
+      },
+      "sections": {
+        "heroVertical": "128px",
+        "sectionVertical": "96px",
+        "componentVertical": "48px",
+        "elementVertical": "24px"
+      }
+    },
+    "layout": {
+      "grid": {
+        "maxWidth": "1200px",
+        "columns": 12,
+        "gutter": "24px",
+        "margin": "24px"
+      },
+      "breakpoints": {
+        "mobile": "375px",
+        "tablet": "768px", 
+        "desktop": "1024px",
+        "widescreen": "1440px"
+      },
+      "containers": {
+        "content": "1200px",
+        "narrow": "800px",
+        "wide": "1400px"
+      },
+      "patterns": [
+        "Full-width hero sections with centered content",
+        "Alternating left-right content blocks", 
+        "Card-based layouts for services",
+        "Vertical step-by-step processes",
+        "Gallery grids for team/image content"
+      ]
+    },
+    "components": {
+      "hero": {
+        "structure": "Full-width background image with overlay text",
+        "textAlignment": "left",
+        "contentWidth": "50%",
+        "backgroundTreatment": "High-quality photography with subtle overlay",
+        "ctaPlacement": "Below headline and description"
+      },
+      "cards": {
+        "style": "Clean, minimal with subtle shadows",
+        "borderRadius": "8px",
+        "padding": "24px",
+        "shadow": "0 2px 12px rgba(0,0,0,0.08)",
+        "hoverEffect": "Subtle lift with increased shadow"
+      },
+      "buttons": {
+        "primary": {
+          "background": "#1a1a1a",
+          "color": "#ffffff",
+          "borderRadius": "6px",
+          "padding": "12px 24px",
+          "fontSize": "16px",
+          "fontWeight": 500,
+          "hoverEffect": "Background lightens to #333"
+        },
+        "secondary": {
+          "background": "transparent",
+          "color": "#1a1a1a",
+          "border": "2px solid #1a1a1a",
+          "borderRadius": "6px",
+          "padding": "10px 22px",
+          "hoverEffect": "Background fills with primary color"
+        }
+      },
+      "navigation": {
+        "style": "Clean horizontal menu",
+        "position": "fixed/sticky top",
+        "background": "white with subtle shadow",
+        "linkStyle": "Minimal, text-based with hover underlines"
+      },
+      "imageGallery": {
+        "layout": "Responsive grid",
+        "aspectRatio": "Square (1:1) for team photos",
+        "borderRadius": "50% for team photos, 8px for content images",
+        "spacing": "16px between items"
+      }
+    },
+    "animations": {
+      "principles": [
+        "Subtle and purposeful motion",
+        "Smooth transitions (300-500ms)",
+        "Easing: ease-out for entrances, ease-in for exits",
+        "Parallax scrolling on hero elements",
+        "Fade-in animations for content sections"
+      ],
+      "transitions": {
+        "default": "all 0.3s ease",
+        "fast": "all 0.15s ease",
+        "slow": "all 0.5s ease"
+      },
+      "effects": [
+        "Image hover scaling (1.05x)",
+        "Button hover state changes",
+        "Smooth scroll behavior",
+        "Content fade-in on scroll",
+        "Card lift on hover"
+      ]
+    },
+    "imagery": {
+      "style": "Professional, high-quality photography",
+      "subjects": [
+        "Active individuals (mothers, professionals)",
+        "Medical/health technology",
+        "Clean, modern environments",
+        "Authentic lifestyle moments"
+      ],
+      "treatment": {
+        "colorGrading": "Natural, slightly warm tones",
+        "saturation": "Moderate, not oversaturated",
+        "contrast": "Good contrast for accessibility",
+        "composition": "Clean, uncluttered backgrounds"
+      },
+      "formats": ["WebP with JPG fallback", "SVG for icons"],
+      "optimization": "Responsive images with multiple breakpoints"
+    },
+    "iconography": {
+      "style": "Minimal line icons",
+      "strokeWidth": "1.5px",
+      "size": "24px default",
+      "treatment": "Outlined style, not filled",
+      "usage": [
+        "Service category indicators", 
+        "Process step numbers",
+        "UI navigation elements",
+        "Feature highlights"
+      ]
+    },
+    "accessibility": {
+      "colorContrast": "WCAG AA compliant (4.5:1 minimum)",
+      "typography": "Minimum 16px font size for body text",
+      "navigation": "Keyboard accessible",
+      "images": "Alt text provided",
+      "focus": "Clear focus indicators",
+      "semantics": "Proper heading hierarchy"
+    },
+    "contentStrategy": {
+      "tone": "Professional yet approachable",
+      "messagingFramework": [
+        "Problem identification (performance gaps)",
+        "Solution presentation (comprehensive approach)", 
+        "Process explanation (4-step method)",
+        "Expertise validation (team credentials)",
+        "Call to action (invitation to experience)"
+      ],
+      "contentTypes": [
+        "Hero messaging",
+        "Service descriptions", 
+        "Process explanations",
+        "Team introductions",
+        "Testimonials/social proof"
+      ]
+    },
+    "technicalSpecs": {
+      "platform": "Wix",
+      "loadingStrategy": "Progressive image loading",
+      "performance": {
+        "targetMetrics": "LCP < 2.5s, FID < 100ms, CLS < 0.1",
+        "optimization": "Image compression, lazy loading, minified CSS/JS"
+      },
+      "responsive": "Mobile-first approach",
+      "crossBrowser": "Modern browsers (Chrome, Firefox, Safari, Edge)"
+    },
+    "designPrinciples": {
+      "clarity": "Clear hierarchy and purposeful white space",
+      "trust": "Professional imagery and credible content",
+      "simplicity": "Minimal design with focus on content",
+      "performance": "Fast loading and smooth interactions",
+      "accessibility": "Inclusive design for all users",
+      "consistency": "Unified visual language throughout"
+    },
+    "implementationGuidelines": {
+      "cssFramework": "Custom CSS with utility classes",
+      "responsiveApproach": "Mobile-first with fluid breakpoints",
+      "codeStructure": [
+        "Component-based architecture",
+        "Reusable utility classes",
+        "Semantic HTML structure",
+        "Progressive enhancement"
+      ],
+      "assetOrganization": [
+        "Optimized image formats (WebP/AVIF)",
+        "Icon sprite sheets or SVG symbols",
+        "Font loading optimization",
+        "CSS/JS minification and concatenation"
+      ]
+    },
+    "usageNotes": {
+      "forCursor": [
+        "Use this JSON as context when building similar premium health/wellness sites",
+        "Reference color values and typography scales for consistency",
+        "Follow the spacing system for proper layout rhythm",
+        "Implement component patterns for common UI elements",
+        "Maintain the professional tone and messaging framework"
+      ],
+      "adaptationTips": [
+        "Adjust color palette while maintaining contrast ratios",
+        "Scale typography system based on brand personality",
+        "Modify spacing scale for different content density needs", 
+        "Adapt imagery style to match client's brand aesthetic",
+        "Customize animation timing to match brand energy level"
+      ]
+    }
+  }
